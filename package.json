@@ -4,19 +4,26 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "webpack-cli --watch",
-    "hot": "webpack-dev-server --progress --colors"
+    "dev": "webpack-cli --watch --mode=development",
+    "build": "NODE_ENV=production webpack --mode=production"
   },
   "git": "https://github.com/ssipos90/tele-music.git",
   "author": "Sebastian Sipos <sebastiansipos90@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "debug": "^4.1.1",
     "dotenv": "^8.2.0",
+    "list": "^2.0.19",
+    "rambda": "^4.4.0",
     "tdl": "^6.0.1",
     "tdl-tdlib-ffi": "^1.4.0"
   },
   "devDependencies": {
-    "webpack": "^4.41.2",
+    "@babel/core": "^7.7.5",
+    "@babel/plugin-proposal-pipeline-operator": "^7.7.4",
+    "@babel/preset-env": "^7.7.6",
+    "babel-loader": "^8.0.6",
+    "webpack": "^4.41.3",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0",
     "webpack-node-externals": "^1.7.2"

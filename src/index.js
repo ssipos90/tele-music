@@ -1,6 +1,6 @@
+const debug = require('debug')('music');
 const { Client } = require('tdl');
 const { TDLib } = require('tdl-tdlib-ffi');
-const hmr = require('./hot.js');
 require('dotenv').config();
 
 const { API_ID, API_HASH, PHONE_NUMBER, AUTH_NUMBER, AUTH_PASSWORD } = process.env;
@@ -22,28 +22,30 @@ const getLogin = () => ({
 
     return AUTH_PASSWORD;
   },
-  getName: async () => ({ firstName: 'Sebastian', lastName: 'Sipos' })
+  // getName: async () => ({ firstName: 'Sebastian', lastName: 'Sipos' })
 });
 
 const run = async () => {
   const client = new Client(new TDLib(), {
     apiId: API_ID,
-    apiHash: API_HASH
+    apiHash: API_HASH,
+    verbosityLevel: 10
     // useTestDc: true
   });
   client.on('error', console.error);
 
   await client.connect();
-  console.log('connected.');
+  debug('connected.');
 
   await client.login(getLogin);
-  console.log('logged in.');
+  debug('logged in.');
 
+  const hmr = require('./hot.js');
   hmr(client);
   if (module.hot) {
-    console.log('hot active');
+    debug('hot active');
     module.hot.accept('./hot.js', function() {
-      console.log('accept update');
+      debug('accept update');
       require('./hot.js')(client);
     });
   }
